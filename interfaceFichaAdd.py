@@ -5,7 +5,7 @@ import re
 from tkinter import messagebox
 import sys
 import os
-from src.servicos.service import formatar_paciente, salvar_paciente
+from service import formatar_paciente, salvar_paciente
 
 
 
