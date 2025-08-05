@@ -63,7 +63,32 @@ def formatar_paciente(
     return paciente    
 
 
+def salvar_paciente(paciente):
+    pacientes = []
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, "r", encoding="utf-8") as file:
+            try:
+                pacientes = json.load(file)  # possivel erro aqui
+            except Exception:
+                pacientes = []
+    pacientes.append(paciente)
+    with open(DATA_FILE, "w", encoding="utf-8") as file:
+        json.dump(pacientes, file, ensure_ascii=False, indent=2)
 
+def listar_pacientes():
+    if not os.path.exists(DATA_FILE):
+        return []
+    with open(DATA_FILE, "r", encoding="utf-8") as file:
+        try:
+            return json.load(file)
+        except Exception:
+            return []
+
+
+def buscar_paciente(nome):
+    pacientes = listar_pacientes()
+    for paciente in pacientes:
+        return[p for p in pacientes if p["nome"].lower() == nome.lower()]              
 
 
     

@@ -3,6 +3,11 @@ import tkinter as tk
 from tkinter import ttk
 import re
 from tkinter import messagebox
+import sys
+import os
+from src.servicos.service import formatar_paciente, salvar_paciente
+
+
 
 # Janela principal
 root = tk.Tk()
@@ -114,13 +119,48 @@ q12 = criar_texto("12 - Possui alguma dificuldade motora, social, comunicativa, 
 q13 = criar_texto("13 - Realiza intervenções/acompanhamentos/terapias?", 23)
 q14 = criar_texto("14 - Possui algum hiperfoco?", 24)
 
+
+
+
+
+ 
 # ----------------------------
 # Botão de salvar
 def salvar():
-    print("Dados coletados:")
-    print("Nome:", nome.get())
-    print("Preferências musicais responsáveis:", q1.get("1.0", tk.END))
 
-tk.Button(form_frame, text="Salvar", command=salvar, bg="lightgreen").grid(row=25, column=0, columnspan=2, pady=20)
+    respostas = {
+        "q1": q1.get("1.0", tk.END),
+        "q2": q2.get("1.0", tk.END),
+        "q3": q3.get("1.0", tk.END),
+        "q4": q4.get("1.0", tk.END),
+        "q5": q5.get("1.0", tk.END),
+        "q6": q6.get("1.0", tk.END),
+        "q7": q7.get("1.0", tk.END),
+        "q8": q8.get("1.0", tk.END),
+        "q9": q9.get("1.0", tk.END),
+        "q10": q10.get("1.0", tk.END),
+        "q11": q11.get("1.0", tk.END),
+        "q12": q12.get("1.0", tk.END),
+        "q13": q13.get("1.0", tk.END),
+        "q14": q14.get("1.0", tk.END)
+    }
+
+    paciente = formatar_paciente(  
+        nome.get(),
+        data_admissao.get(),
+        data_nasc.get(),
+        idade.get(),
+        escola.get(),
+        endereco.get(),
+        responsavel.get(),
+        contato.get(),
+        respostas
+    )
+
+    salvar_paciente(paciente)
+    messagebox.showinfo("Sucesso", "Dados salvos com sucesso!")
+    
+btn_salvar = tk.Button(form_frame, text="Salvar", command=salvar, bg="green", fg="white", font=("Arial", 12, "bold"))
+btn_salvar.grid(row=25, column=0, columnspan=2, pady=20)
 
 root.mainloop()
